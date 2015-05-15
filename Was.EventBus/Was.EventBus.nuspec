@@ -6,13 +6,17 @@
     <title>$title$</title>
     <authors>Patryk W¹siewicz</authors>
     <owners>Patryk W¹siewicz</owners>
-    <licenseUrl>http://LICENSE_URL_HERE_OR_DELETE_THIS_LINE</licenseUrl>
-    <projectUrl>http://PROJECT_URL_HERE_OR_DELETE_THIS_LINE</projectUrl>
-    <iconUrl>http://ICON_URL_HERE_OR_DELETE_THIS_LINE</iconUrl>
+    <licenseUrl>https://github.com/pwasiewicz/Was.EventBus</licenseUrl>
+    <projectUrl>https://github.com/pwasiewicz/Was.EventBus</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>Simple event bus with dynamic interceptor.</description>
-    <releaseNotes>Summary of changes made in this release of the package.</releaseNotes>
+    <releaseNotes>First stable release.</releaseNotes>
     <copyright>Copyright Patryk W¹siewicz 2015</copyright>
     <tags>EventBus event bus handler</tags>
+    <dependencies> 
+   <group targetFramework="net40" >
+      <dependency id="Castle.Core" version="3.3.3" />
+   </group>
+</dependencies>
   </metadata>
 </package>
