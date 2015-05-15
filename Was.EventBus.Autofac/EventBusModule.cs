@@ -1,14 +1,14 @@
-﻿namespace OpenTeamProject.EventBus.AutofacIntegration
+﻿namespace Was.EventBus.Autofac
 {
-    using Autofac;
-    using Invokers;
     using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Reflection;
-    using Module = Autofac.Module;
+    using global::Autofac;
+    using EventBus;
+    using Invokers;
 
-    public class EventBusModule : Module
+    public class EventBusModule : global::Autofac.Module
     {
         private readonly Assembly[] assemblies;
 

@@ -1,10 +1,11 @@
-﻿namespace OpenTeamProject.EventBus.AutofacIntegration
+﻿namespace Was.EventBus.Autofac
 {
     using System;
     using System.Collections;
     using System.Collections.Generic;
     using System.Linq;
-    using Autofac;
+    using global::Autofac;
+    using EventBus;
 
     public class ComponentContextProvider : IImplementationProvider
     {
@@ -22,7 +23,7 @@
             var allImplementationType = typeof(IEnumerable<>).MakeGenericType(eventType);
 
             IEnumerable allImplementations;
-            if (keyedService != null)
+            if (this.keyedService != null)
             {
                 allImplementations =
                     (IEnumerable)this.componentContext.ResolveKeyed(this.keyedService, allImplementationType);
