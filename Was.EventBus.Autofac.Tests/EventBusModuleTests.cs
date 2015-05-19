@@ -1,8 +1,10 @@
 ﻿namespace Was.EventBus.Autofac.Tests
 {
     using System.Reflection;
+    using ExceptionEvent;
     using global::Autofac;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
+    using NAUcrm.EventBus.Exception;
     using SampleEvent;
 
     [TestClass]
@@ -21,7 +23,7 @@
         }
 
         [TestMethod]
-        public void SomeTest()
+        public void LazyEvalution_Test()
         {
             var eventProxy = this.container.Resolve<ISomeEvent>();
 
@@ -30,6 +32,14 @@
             eventProxy.CallEvent();
 
             Assert.IsTrue(CheckCtorCalledEvent.CtorCalled);
+        }
+
+        [TestMethod, ExpectedException(typeof(EventFatalException))]
+        public void ThrowingException_Test()
+        {
+            var eventProxy = this.container.Resolve<IEventWithException>();
+            eventProxy.Invoke();
+            eventProxy.InvokeFatal();
         }
     }
 }

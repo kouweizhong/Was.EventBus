@@ -1,9 +1,10 @@
 ﻿namespace Was.EventBus.Invokers
 {
+    using Castle.DynamicProxy;
+    using NAUcrm.EventBus.Exception;
     using System;
     using System.Collections.Generic;
     using System.Reflection;
-    using Castle.DynamicProxy;
 
     public class MultiInterfaceProxy : IInterceptor
     {
@@ -51,21 +52,36 @@
 
         public void Intercept(IInvocation invocation)
         {
-
             var returnType = invocation.Method.ReturnType;
-            if (returnType.IsGenericType && typeof(IEnumerable<>).IsAssignableFrom(returnType.GetGenericTypeDefinition()))
+            if (returnType.IsGenericType &&
+                typeof(IEnumerable<>).IsAssignableFrom(returnType.GetGenericTypeDefinition()))
             {
-                var list = (dynamic)Activator.CreateInstance(typeof(List<>).MakeGenericType(returnType.GetGenericArguments()[0]));
+                var list =
+                    (dynamic)
+                    Activator.CreateInstance(typeof(List<>).MakeGenericType(returnType.GetGenericArguments()[0]));
 
                 foreach (var @event in this.Events)
                 {
-                    foreach (var elem in (dynamic)invocation.Method.Invoke(@event, invocation.Arguments))
+                    try
                     {
-                        list.Add(elem);
+                        dynamic localList = invocation.Method.Invoke(@event, invocation.Arguments);
+
+                        foreach (var elem in localList.ToList())
+                        {
+                            list.Add(elem);
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        if (ex is EventFatalException)
+                        {
+                            throw;
+                        }
                     }
                 }
 
                 invocation.ReturnValue = list;
+
                 return;
             }
 
@@ -73,7 +89,28 @@
 
             foreach (var @event in this.Events)
             {
-                result = invocation.Method.Invoke(@event, invocation.Arguments);
+                try
+                {
+                    result = invocation.Method.Invoke(@event, invocation.Arguments);
+                }
+                catch (Exception ex)
+                {
+                    if (!(ex is TargetInvocationException))
+                    {
+                        continue;
+                    }
+
+                    var tex = ex.InnerException;
+                    if (tex == null)
+                    {
+                        continue;
+                    }
+
+                    if (tex is EventFatalException)
+                    {
+                        throw tex;
+                    }
+                }
             }
 
             invocation.ReturnValue = result;
