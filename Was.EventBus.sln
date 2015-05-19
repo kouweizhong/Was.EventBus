@@ -7,6 +7,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Was.EventBus", "Was.EventBu
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Was.EventBus.Autofac", "Was.EventBus.Autofac\Was.EventBus.Autofac.csproj", "{A9A65508-A3B1-4D34-8D2C-46FE5B8D7D0E}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{D6D7C624-C156-4DAF-B59D-1C0D62DC5175}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Was.EventBus.Autofac.Tests", "Was.EventBus.Autofac.Tests\Was.EventBus.Autofac.Tests.csproj", "{57D0E3BE-5CDB-4021-976E-6747E13BBCAD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,8 +25,15 @@ Global
 		{A9A65508-A3B1-4D34-8D2C-46FE5B8D7D0E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A9A65508-A3B1-4D34-8D2C-46FE5B8D7D0E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A9A65508-A3B1-4D34-8D2C-46FE5B8D7D0E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{57D0E3BE-5CDB-4021-976E-6747E13BBCAD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{57D0E3BE-5CDB-4021-976E-6747E13BBCAD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{57D0E3BE-5CDB-4021-976E-6747E13BBCAD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{57D0E3BE-5CDB-4021-976E-6747E13BBCAD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{57D0E3BE-5CDB-4021-976E-6747E13BBCAD} = {D6D7C624-C156-4DAF-B59D-1C0D62DC5175}
 	EndGlobalSection
 EndGlobal

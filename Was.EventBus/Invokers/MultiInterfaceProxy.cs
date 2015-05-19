@@ -2,7 +2,6 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.Linq;
     using System.Reflection;
     using Castle.DynamicProxy;
 
@@ -11,29 +10,23 @@
         private readonly IImplementationProvider implementationProvider;
         private readonly Type eventType;
 
-        private IEnumerable<IEvent> events;
+        private readonly Lazy<IEnumerable<IEvent>> events;
         private IEnumerable<MethodInfo> eventMethods;
 
-        private MultiInterfaceProxy(Type eventType, IImplementationProvider implementationProvider, bool resolveEventsImmediately)
+        private MultiInterfaceProxy(Type eventType, IImplementationProvider implementationProvider)
         {
             this.implementationProvider = implementationProvider;
             this.eventType = eventType;
 
-            if (resolveEventsImmediately)
-            {
-                this.events = this.implementationProvider.For(this.eventType).ToList();
-            }
+            this.events = this.implementationProvider.For(this.eventType);
         }
 
         private IEnumerable<IEvent> Events
         {
-            get
-            {
-                return this.events ?? (this.events = this.implementationProvider.For(this.eventType).ToList());
-            }
+            get { return this.events.Value; }
         }
 
-        public static object For(Type eventType, IImplementationProvider implementationProvider, bool resolveEventsImmediately = false)
+        public static object For(Type eventType, IImplementationProvider implementationProvider)
         {
             if (!eventType.IsInterface)
             {
@@ -48,7 +41,7 @@
             var generator = new ProxyGenerator();
             var proxtInterceptor =
                 new MultiInterfaceProxy(eventType,
-                                        implementationProvider, resolveEventsImmediately);
+                                        implementationProvider);
 
             var instance = generator.CreateInterfaceProxyWithoutTarget(eventType, proxtInterceptor);
 

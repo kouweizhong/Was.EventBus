@@ -16,14 +16,14 @@
             this.eventType = eventType;
         }
 
-        public IEnumerable<IEvent> For(Type eventType)
+        public Lazy<IEnumerable<IEvent>> For(Type eventType)
         {
             if (this.eventType != eventType)
             {
                 throw new NotSupportedException("Only one type is supported.");
             }
 
-            return this.events;
+            return new Lazy<IEnumerable<IEvent>>(() => this.events);
         }
     }
 }

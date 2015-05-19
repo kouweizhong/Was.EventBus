@@ -5,6 +5,6 @@
 
     public interface IImplementationProvider
     {
-		IEnumerable<IEvent> For(Type eventType);
+        Lazy<IEnumerable<IEvent>> For(Type eventType);
     }
 }

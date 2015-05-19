@@ -38,14 +38,12 @@
                 builder.RegisterAssemblyTypes(this.assemblies)
                        .AssignableTo(localEventType)
                        .As(localEventType)
-                       .InstancePerRequest()
+                       .InstancePerLifetimeScope()
                        .Keyed(eventTypeKey, eventType);
 
                 builder.Register(ctx => MultiInterfaceProxy.For(localEventType,
-                                                                new ComponentContextProvider(ctx, eventTypeKey),
-                                                                resolveEventsImmediately: true))
-                       .As(localEventType)
-                       .InstancePerRequest();
+                                                                new ComponentContextProvider(ctx, eventTypeKey)))
+                       .As(localEventType).InstancePerLifetimeScope();
             }
         }
     }

@@ -1,11 +1,12 @@
 ﻿namespace Was.EventBus.Autofac
 {
-    using System;
     using System.Collections;
-    using System.Collections.Generic;
     using System.Linq;
-    using global::Autofac;
+    using System.Reflection;
     using EventBus;
+    using global::Autofac;
+    using System;
+    using System.Collections.Generic;
 
     public class ComponentContextProvider : IImplementationProvider
     {
@@ -18,24 +19,29 @@
             this.keyedService = keyedService;
         }
 
-        public IEnumerable<IEvent> For(Type eventType)
+        public Lazy<IEnumerable<IEvent>> For(Type eventType)
         {
             var allImplementationType = typeof(IEnumerable<>).MakeGenericType(eventType);
+            var lazyType = typeof(Lazy<>).MakeGenericType(allImplementationType);
 
-            IEnumerable allImplementations;
-            if (this.keyedService != null)
-            {
-                allImplementations =
-                    (IEnumerable)this.componentContext.ResolveKeyed(this.keyedService, allImplementationType);
-            }
-            else
-            {
-                allImplementations =
-                    (IEnumerable)this.componentContext.Resolve(allImplementationType);
+            var allImplementationsLazy = this.keyedService != null
+                                             ? this.componentContext.ResolveKeyed(this.keyedService, lazyType)
+                                             : this.componentContext.Resolve(allImplementationType);
 
-            }
+            return new Lazy<IEnumerable<IEvent>>(() =>
+                                                 {
+                                                     var allImpl =
+                                                         (IEnumerable)allImplementationsLazy.GetType()
+                                                                               .GetProperty("Value",
+                                                                                            BindingFlags.Instance |
+                                                                                            BindingFlags.Public)
+                                                                               .GetValue(allImplementationsLazy,
+                                                                                         new object[0]);
 
-            return allImplementations.Cast<IEvent>();
+                                                     return allImpl.Cast<IEvent>();
+                                                 });
+
+            return (dynamic)allImplementationsLazy;
         }
     }
 }
