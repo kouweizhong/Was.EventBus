@@ -1,5 +1,6 @@
 ﻿namespace Was.EventBus.Invokers
 {
+    using System.Net.Mime;
     using Castle.DynamicProxy;
     using NAUcrm.EventBus.Exception;
     using System;
@@ -73,10 +74,17 @@
                     }
                     catch (Exception ex)
                     {
-                        if (ex is EventFatalException)
+                        if (!(ex is EventFatalException))
                         {
-                            throw;
+                            continue;
                         }
+
+                        if (ex.InnerException != null)
+                        {
+                            ex = ex.InnerException;
+                        }
+
+                        throw ex;
                     }
                 }
 
@@ -108,6 +116,11 @@
 
                     if (tex is EventFatalException)
                     {
+                        if (tex.InnerException != null)
+                        {
+                            tex = tex.InnerException;
+                        }
+
                         throw tex;
                     }
                 }
