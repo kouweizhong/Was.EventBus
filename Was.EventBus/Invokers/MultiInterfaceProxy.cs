@@ -74,17 +74,7 @@
                     }
                     catch (Exception ex)
                     {
-                        if (!(ex is EventFatalException))
-                        {
-                            continue;
-                        }
-
-                        if (ex.InnerException != null)
-                        {
-                            ex = ex.InnerException;
-                        }
-
-                        throw ex;
+                        this.HandleException(ex);
                     }
                 }
 
@@ -103,30 +93,37 @@
                 }
                 catch (Exception ex)
                 {
-                    if (!(ex is TargetInvocationException))
-                    {
-                        continue;
-                    }
-
-                    var tex = ex.InnerException;
-                    if (tex == null)
-                    {
-                        continue;
-                    }
-
-                    if (tex is EventFatalException)
-                    {
-                        if (tex.InnerException != null)
-                        {
-                            tex = tex.InnerException;
-                        }
-
-                        throw tex;
-                    }
+                    this.HandleException(ex);
                 }
             }
 
             invocation.ReturnValue = result;
+        }
+
+        private void HandleException(Exception ex)
+        {
+            if (!(ex is TargetInvocationException))
+            {
+                throw ex;
+            }
+
+            var tex = ex.InnerException;
+            if (tex == null)
+            {
+                throw ex;
+            }
+
+            if (!(tex is EventFatalException))
+            {
+                return;
+            }
+
+            if (tex.InnerException != null)
+            {
+                tex = tex.InnerException;
+            }
+
+            throw tex;
         }
     }
 }

@@ -12,7 +12,7 @@
 
         public void InvokeFatal()
         {
-            throw new EventFatalException();
+            throw new EventFatalException("tst", new AggregateException());
         }
     }
 }

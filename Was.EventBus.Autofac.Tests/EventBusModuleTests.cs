@@ -1,5 +1,6 @@
 ﻿namespace Was.EventBus.Autofac.Tests
 {
+    using System;
     using System.Reflection;
     using ExceptionEvent;
     using global::Autofac;
@@ -34,7 +35,7 @@
             Assert.IsTrue(CheckCtorCalledEvent.CtorCalled);
         }
 
-        [TestMethod, ExpectedException(typeof(EventFatalException))]
+        [TestMethod, ExpectedException(typeof(AggregateException))]
         public void ThrowingException_Test()
         {
             var eventProxy = this.container.Resolve<IEventWithException>();
