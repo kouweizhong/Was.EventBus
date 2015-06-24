@@ -26,7 +26,7 @@
 
             var allImplementationsLazy = this.keyedService != null
                                              ? this.componentContext.ResolveKeyed(this.keyedService, lazyType)
-                                             : this.componentContext.Resolve(allImplementationType);
+                                             : this.componentContext.Resolve(lazyType);
 
             return new Lazy<IEnumerable<IEvent>>(() =>
                                                  {
@@ -40,8 +40,6 @@
 
                                                      return allImpl.Cast<IEvent>();
                                                  });
-
-            return (dynamic)allImplementationsLazy;
         }
     }
 }
