@@ -15,6 +15,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Was.EventBus.MiniAutFac", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Was.EventBus.MiniAutFac.Tests", "Was.EventBus.MiniAutFac.Tests\Was.EventBus.MiniAutFac.Tests.csproj", "{B1F2C1DC-4C9B-47CA-A847-D9A9A95A0CD7}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Was.EventBus.Tests", "Was.EventBus.Tests\Was.EventBus.Tests.csproj", "{C2DEBB15-5319-484A-BAA2-D75A39CB1094}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -41,6 +43,10 @@ Global
 		{B1F2C1DC-4C9B-47CA-A847-D9A9A95A0CD7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B1F2C1DC-4C9B-47CA-A847-D9A9A95A0CD7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B1F2C1DC-4C9B-47CA-A847-D9A9A95A0CD7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C2DEBB15-5319-484A-BAA2-D75A39CB1094}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C2DEBB15-5319-484A-BAA2-D75A39CB1094}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C2DEBB15-5319-484A-BAA2-D75A39CB1094}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C2DEBB15-5319-484A-BAA2-D75A39CB1094}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -48,5 +54,6 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{57D0E3BE-5CDB-4021-976E-6747E13BBCAD} = {D6D7C624-C156-4DAF-B59D-1C0D62DC5175}
 		{B1F2C1DC-4C9B-47CA-A847-D9A9A95A0CD7} = {D6D7C624-C156-4DAF-B59D-1C0D62DC5175}
+		{C2DEBB15-5319-484A-BAA2-D75A39CB1094} = {D6D7C624-C156-4DAF-B59D-1C0D62DC5175}
 	EndGlobalSection
 EndGlobal

@@ -1,9 +1,9 @@
 ﻿namespace Was.EventBus.Invokers
 {
-    using System.Net.Mime;
     using Castle.DynamicProxy;
     using NAUcrm.EventBus.Exception;
     using System;
+    using System.Collections;
     using System.Collections.Generic;
     using System.Reflection;
 
@@ -58,18 +58,21 @@
                 typeof(IEnumerable<>).IsAssignableFrom(returnType.GetGenericTypeDefinition()))
             {
                 var list =
-                    (dynamic)
+                    (IList)
                     Activator.CreateInstance(typeof(List<>).MakeGenericType(returnType.GetGenericArguments()[0]));
 
                 foreach (var @event in this.Events)
                 {
                     try
                     {
-                        dynamic localList = invocation.Method.Invoke(@event, invocation.Arguments);
+                        var enumerable = (IEnumerable)invocation.Method.Invoke(@event, invocation.Arguments);
+                        if (enumerable == null) continue;
 
-                        foreach (var elem in localList.ToList())
+                        var enumerator = enumerable.GetEnumerator();
+
+                        while (enumerator.MoveNext())
                         {
-                            list.Add(elem);
+                            list.Add(enumerator.Current);
                         }
                     }
                     catch (Exception ex)
