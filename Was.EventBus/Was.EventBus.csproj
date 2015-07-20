@@ -43,7 +43,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Attributes\AlwaysFatalEventAttribute.cs" />
     <Compile Include="Exception\EventFatalError.cs" />
+    <Compile Include="Extensions\EventExtensions.cs" />
     <Compile Include="IEvent.cs" />
     <Compile Include="IImplementationProvider.cs" />
     <Compile Include="Invokers\MultiInterfaceProxy.cs" />

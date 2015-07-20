@@ -42,5 +42,12 @@
             eventProxy.Invoke();
             eventProxy.InvokeFatal();
         }
+
+        [TestMethod, ExpectedException(typeof(InvalidOperationException))]
+        public void Do_AlwaysThrowable_ExceptionExpcted()
+        {
+            var eventProxy = this.container.Resolve<IAlwaysFatalEvent>();
+            eventProxy.Do();
+        }
     }
 }

@@ -57,7 +57,9 @@
     <Compile Include="ExceptionEvent\IEventWithException.cs" />
     <Compile Include="ExceptionEvent\ThrowableEvent.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SampleEvent\AlwaysFatalEventImpl.cs" />
     <Compile Include="SampleEvent\CheckCtorCalledEvent.cs" />
+    <Compile Include="SampleEvent\IAlwaysFatalEvent.cs" />
     <Compile Include="SampleEvent\ISomeEvent.cs" />
   </ItemGroup>
   <ItemGroup>

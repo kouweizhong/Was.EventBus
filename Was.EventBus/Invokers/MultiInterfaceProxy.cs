@@ -1,6 +1,7 @@
 ﻿namespace Was.EventBus.Invokers
 {
     using Castle.DynamicProxy;
+    using Extensions;
     using NAUcrm.EventBus.Exception;
     using System;
     using System.Collections;
@@ -77,7 +78,7 @@
                     }
                     catch (Exception ex)
                     {
-                        this.HandleException(ex);
+                        this.HandleException(ex, @event);
                     }
                 }
 
@@ -96,14 +97,14 @@
                 }
                 catch (Exception ex)
                 {
-                    this.HandleException(ex);
+                    this.HandleException(ex, @event);
                 }
             }
 
             invocation.ReturnValue = result;
         }
 
-        private void HandleException(Exception ex)
+        private void HandleException(Exception ex, IEvent proxiedEvent)
         {
             if (!(ex is TargetInvocationException))
             {
@@ -116,7 +117,7 @@
                 throw ex;
             }
 
-            if (!(tex is EventFatalException))
+            if (!(tex is EventFatalException) && !proxiedEvent.IsAlwaysFatal())
             {
                 return;
             }
