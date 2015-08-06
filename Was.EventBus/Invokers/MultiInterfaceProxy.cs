@@ -10,18 +10,11 @@
 
     public class MultiInterfaceProxy : IInterceptor
     {
-        private readonly IImplementationProvider implementationProvider;
-        private readonly Type eventType;
-
         private readonly Lazy<IEnumerable<IEvent>> events;
-        private IEnumerable<MethodInfo> eventMethods;
 
         private MultiInterfaceProxy(Type eventType, IImplementationProvider implementationProvider)
         {
-            this.implementationProvider = implementationProvider;
-            this.eventType = eventType;
-
-            this.events = this.implementationProvider.For(this.eventType);
+            this.events = implementationProvider.For(eventType);
         }
 
         private IEnumerable<IEvent> Events
