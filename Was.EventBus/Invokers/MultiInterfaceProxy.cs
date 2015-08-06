@@ -55,38 +55,20 @@
         public void Intercept(IInvocation invocation)
         {
             var returnType = invocation.Method.ReturnType;
+
             if (returnType.IsGenericType &&
                 typeof(IEnumerable<>).IsAssignableFrom(returnType.GetGenericTypeDefinition()))
             {
-                var list =
-                    (IList)
-                    Activator.CreateInstance(typeof(List<>).MakeGenericType(returnType.GetGenericArguments()[0]));
-
-                foreach (var @event in this.Events)
-                {
-                    try
-                    {
-                        var enumerable = (IEnumerable)invocation.Method.Invoke(@event, invocation.Arguments);
-                        if (enumerable == null) continue;
-
-                        var enumerator = enumerable.GetEnumerator();
-
-                        while (enumerator.MoveNext())
-                        {
-                            list.Add(enumerator.Current);
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-                        this.HandleException(ex, @event);
-                    }
-                }
-
-                invocation.ReturnValue = list;
-
-                return;
+                this.InvokeWithEnumerableReturn(invocation, returnType);
             }
+            else
+            {
+                this.InvokeVoid(invocation);
+            }
+        }
 
+        private void InvokeVoid(IInvocation invocation)
+        {
             object result = null;
 
             foreach (var @event in this.Events)
@@ -102,6 +84,38 @@
             }
 
             invocation.ReturnValue = result;
+        }
+
+        private void InvokeWithEnumerableReturn(IInvocation invocation, Type returnType)
+        {
+            var list =
+                (IList)
+                Activator.CreateInstance(typeof(List<>).MakeGenericType(returnType.GetGenericArguments()[0]));
+
+            foreach (var @event in this.Events)
+            {
+                try
+                {
+                    var enumerable = (IEnumerable)invocation.Method.Invoke(@event, invocation.Arguments);
+                    if (enumerable == null)
+                    {
+                        continue;
+                    }
+
+                    var enumerator = enumerable.GetEnumerator();
+
+                    while (enumerator.MoveNext())
+                    {
+                        list.Add(enumerator.Current);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    this.HandleException(ex, @event);
+                }
+            }
+
+            invocation.ReturnValue = list;
         }
 
         private void HandleException(Exception ex, IEvent proxiedEvent)
