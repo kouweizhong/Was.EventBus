@@ -1,12 +1,13 @@
 ﻿namespace Was.EventBus.Tests
 {
-    using System.Linq;
     using EnumerableEvent;
+    using Extensions;
     using global::MiniAutFac;
     using global::MiniAutFac.Interfaces;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
-    using System.Reflection;
     using MiniAutFac;
+    using System.Linq;
+    using System.Reflection;
 
     [TestClass]
     public class EnumerableTest
@@ -24,12 +25,21 @@
         }
 
         [TestMethod]
-        public void TestMethod1()
+        public void InvokingTests()
         {
             var enumEventProxy = this.container.Resolve<IEnumEvent>();
             var coll = enumEventProxy.GetStrings().ToList();
 
             Assert.AreEqual(2, coll.Count);
+        }
+
+        [TestMethod]
+        public void Test_GettingAllImplementations()
+        {
+            var enumEventProxy = this.container.Resolve<IEnumEvent>();
+            var registeredEvents = enumEventProxy.GetUnderlyingInstances();
+
+            Assert.AreEqual(2, registeredEvents.Count());
         }
     }
 }
