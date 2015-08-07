@@ -43,9 +43,9 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
-    <Reference Include="Was.EventBus, Version=0.0.1.2, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Was.EventBus.0.0.1.2\lib\net40\Was.EventBus.dll</HintPath>
+    <Reference Include="Was.EventBus, Version=0.0.1.6, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Was.EventBus.0.0.1.6\lib\net40\Was.EventBus.dll</HintPath>
+      <Private>True</Private>
     </Reference>
   </ItemGroup>
   <ItemGroup>

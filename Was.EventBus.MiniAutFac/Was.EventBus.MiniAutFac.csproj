@@ -33,9 +33,9 @@
     <Reference Include="Castle.Core">
       <HintPath>..\packages\Castle.Core.3.3.3\lib\net45\Castle.Core.dll</HintPath>
     </Reference>
-    <Reference Include="MiniAutFac, Version=1.3.6.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\MiniAutFac.1.3.6\lib\portable-net45+sl50+win+wpa81+wp80\MiniAutFac.dll</HintPath>
+    <Reference Include="MiniAutFac, Version=1.3.7.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MiniAutFac.1.3.8\lib\portable-net45+sl50+win+wpa81+wp80+MonoAndroid10+xamarinios10+MonoTouch10\MiniAutFac.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -44,6 +44,10 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
+    <Reference Include="Was.EventBus, Version=0.0.1.6, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Was.EventBus.0.0.1.6\lib\net40\Was.EventBus.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="EventBusModule.cs" />
@@ -52,12 +56,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Was.EventBus\Was.EventBus.csproj">
-      <Project>{51999aa2-dd4c-47ef-8568-f2b76b83cb24}</Project>
-      <Name>Was.EventBus</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
