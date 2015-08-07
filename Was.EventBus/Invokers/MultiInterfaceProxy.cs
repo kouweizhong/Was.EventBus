@@ -39,9 +39,7 @@
                 new MultiInterfaceProxy(eventType,
                                         implementationProvider);
 
-            var instance = generator.CreateInterfaceProxyWithoutTarget(eventType, proxtInterceptor);
-
-            return instance;
+            return generator.CreateInterfaceProxyWithoutTarget(eventType, proxtInterceptor);
         }
 
 
