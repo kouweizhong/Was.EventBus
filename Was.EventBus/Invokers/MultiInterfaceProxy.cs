@@ -70,7 +70,7 @@
                 }
                 catch (Exception ex)
                 {
-                    this.HandleException(ex, @event);
+                    HandleException(ex, @event);
                 }
             }
 
@@ -102,14 +102,14 @@
                 }
                 catch (Exception ex)
                 {
-                    this.HandleException(ex, @event);
+                    HandleException(ex, @event);
                 }
             }
 
             invocation.ReturnValue = list;
         }
 
-        private void HandleException(Exception ex, IEvent proxiedEvent)
+        private static void HandleException(Exception ex, IEvent proxiedEvent)
         {
             if (!(ex is TargetInvocationException))
             {

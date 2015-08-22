@@ -22,12 +22,17 @@
             if (@event == null) throw new ArgumentNullException("event");
             if (!ProxyUtil.IsProxy(@event)) throw new ArgumentException("Event is concrete implementation, not a proxy.", "event");
 
-            var interceptor = ((IProxyTargetAccessor)@event).GetInterceptors().Single();
-            var type = interceptor.GetType();
-            if (type != typeof(MultiInterfaceProxy))
+
+            // ReSharper disable once SuspiciousTypeConversion.Global
+            var interceptors = ((IProxyTargetAccessor) @event).GetInterceptors().ToList();
+            if (interceptors.Count != 1) throw new ArgumentException("Invalid No of interceptors.");
+
+            var interceptor = interceptors.Single();
+            var interceptorType = interceptor.GetType();
+            if (interceptorType != typeof(MultiInterfaceProxy))
                 throw new ArgumentException("Proxy not created by Was.EventBus.", "event");
 
-            var eventProp = type.GetProperty("Events", BindingFlags.Instance | BindingFlags.NonPublic);
+            var eventProp = interceptorType.GetProperty("Events", BindingFlags.Instance | BindingFlags.NonPublic);
             var events = (IEnumerable<IEvent>)eventProp.GetValue(interceptor, null);
 
             return new ReadOnlyCollection<TEvent>(events.Cast<TEvent>().ToList());
