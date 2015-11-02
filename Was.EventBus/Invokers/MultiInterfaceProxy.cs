@@ -1,4 +1,8 @@
-﻿namespace Was.EventBus.Invokers
+﻿using System.Data.SqlTypes;
+using System.Linq;
+using System.Threading.Tasks;
+
+namespace Was.EventBus.Invokers
 {
     using Castle.DynamicProxy;
     using Extensions;
@@ -52,10 +56,23 @@
             {
                 this.InvokeWithEnumerableReturn(invocation, returnType);
             }
+            else if (returnType == typeof (Task))
+            {
+                this.HandleTask(invocation);
+            }
             else
             {
                 this.InvokeVoid(invocation);
             }
+        }
+
+        private void HandleTask(IInvocation invocation)
+        {
+            var tasks = this.Events.Select(ev => (Task) invocation.Method.Invoke(ev,
+                invocation.Arguments)).ToArray();
+
+
+            invocation.ReturnValue = Task.Factory.StartNew(() => Task.WaitAll(tasks));
         }
 
         private void InvokeVoid(IInvocation invocation)
