@@ -34,5 +34,5 @@ builder.RegisterType<OtherInfoImpl>().As<IInfo>();
 
 ...
 container.Resolve<IInfo>().SetInfo("Some info"); 
-      // implementations are automatically found, resolved are invoked.
+// implementations are automatically found, resolved are invoked.
 ```
