@@ -28,9 +28,7 @@ interface IInfo : IEvent
      void SetInfo(string info);
 }
 
-builder.RegisterModule(new EventBusModule(new[] { Assembly.GetCallingAssembly() })); // assemblies to search types for
-builder.RegisterType<SomeInfo>().As<IInfo>();
-builder.RegisterType<OtherInfoImpl>().As<IInfo>();
+builder.RegisterModule(new EventBusModule(new[] { Assembly.GetCallingAssembly() })); // assemblies to search types for - events are automatically registered in container builder
 
 ...
 container.Resolve<IInfo>().SetInfo("Some info"); 
