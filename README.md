@@ -23,15 +23,16 @@ info.SetInfo("Some info"); // a call is passed to oneInfo and twoInfo - both are
 # Autofac integration
 There is an module for integrating Was.EventBus with autofac:
 ``` c#
-builder.RegisterModule(
-			   new EventBusModule(new[] { Assembly.GetCallingAssembly() })); // assemblies to search types for
-			   
 interface IInfo : IEvent
 {
      void SetInfo(string info);
 }
 
+builder.RegisterModule(new EventBusModule(new[] { Assembly.GetCallingAssembly() })); // assemblies to search types for
+builder.RegisterType<SomeInfo>().As<IInfo>();
+builder.RegisterType<OtherInfoImpl>().As<IInfo>();
 
+...
 container.Resolve<IInfo>().SetInfo("Some info"); 
       // implementations are automatically found, resolved are invoked.
 ```
